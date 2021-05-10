@@ -29,6 +29,15 @@ void printList(Node *node)
     printList(node->next);
 }
 
+void insertAttheBegining(Node *head, Node *newItem)
+{
+    if(newItem != NULL)
+    {
+        newItem->next = head;
+    }
+
+    head = newItem;
+}
 
 int main()
 {
@@ -39,16 +48,12 @@ int main()
 
     a->next = c;
     c->next = b;
+    Node *head = a;
+    printList(head);
 
-    // Node *head = a;
+    //insert at the begining of the linked list
+    
 
-    // while(head != NULL)
-    // {
-    //     cout<<head->data<<endl;
-    //     head = head->next;
-    // }
-
-    printList(a);
 
 
     return 0;
