@@ -52,12 +52,50 @@ Node* InsertAtEnd(Node* head, int newNodeData)
 //return new head
 Node* DeleteNodeFromTheBegin(Node* head)
 {
+    printf("Deleting First node. ");
+    
     if(head == NULL)
+    {
+        printf("No data to delete.\n");
         return NULL;
+    }
+    printf("Deleting value = %d\n", head->data);
     
     Node* newHead = head->next;
     free(head);
     return newHead;
+}
+
+Node* DeleteNodeFromTheEnd(Node* head)
+{
+    printf("Deleting Last node. ");
+
+    if(head == NULL)
+    {
+        printf("No data to delete.\n");
+        return NULL;
+    }
+
+    //Only one node exist
+    if(head->next == NULL)
+    {
+        printf("Deleting value = %d\n", head->data);
+        free(head);
+        return NULL;
+    }
+
+    Node* temp = head;
+    
+    while(temp->next->next!=NULL)
+    {
+        temp = temp->next;
+    }
+
+    printf("Deleting value = %d\n", temp->next->data);
+
+    free(temp->next);
+    temp->next = NULL;
+    return head;
 }
 
 
@@ -84,9 +122,29 @@ void FreeAllNodeMemory(Node* start)
     printf("Memory Cleared.\n");
 }
 
+//return the position of a list if found
+int SearchAll(Node* head, int searchItem)
+{
+    if(head == NULL)
+        return -1; //not found
+
+    if(head->data == searchItem)
+        return 1;
+
+    int res = SearchAll(head->next, searchItem);
+
+    if(res > 0)
+        return 1 + res;
+
+    return res;
+} 
+
+
 int main()
 {
     Node* head = NULL;
+
+    printf("Add node to singly linked list: \n");
 
     head = InsertAtEnd(head, 120);
     head = InsertAtBegin(head, 10);
@@ -95,10 +153,31 @@ int main()
     head = InsertAtBegin(head, 40);
     head = InsertAtBegin(head, 50);
     head = InsertAtEnd(head, 100);
+
+    printf("\nPrinting nodes:\n");
+    Traverse_a_List(head);
+
+    printf("\nSearching...\n");
+    int searchItem = 150;
+    int searchResult = SearchAll(head, searchItem);
+    printf("Search result for %d is = ");
     
+    if(searchResult < 0)
+    {
+        printf("Not found.\n");
+    }
+    else
+    {
+        printf("Found. Position = %d\n", searchResult);
+    }
 
+    printf("\nDeletion from first, Testing.\n");
+    head = DeleteNodeFromTheBegin(head);
 
-    printf("Printing nodes:\n");
+    printf("\nDeletion from last, Testing.\n");
+    head = DeleteNodeFromTheEnd(head);
+
+    printf("\nPrinting nodes after deletion:\n");
     Traverse_a_List(head);
 
     FreeAllNodeMemory(head);
