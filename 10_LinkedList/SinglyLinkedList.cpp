@@ -139,6 +139,44 @@ int SearchAll(Node* head, int searchItem)
     return res;
 } 
 
+Node* InsertAtPosition(Node* head, int position, int value)
+{
+    Node* temp = head;
+    int I=1;
+
+    if(position == 1)
+    {
+        Node* newNode = new Node(value);
+        newNode->next = head;
+        return newNode;
+    }
+
+    for(I=1;I<position-1;I++)
+    {
+        if(temp!=NULL)
+        {
+            temp = temp->next;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    if(I==(position-1))
+    {
+        Node* newNode = new Node(value);
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
+    else
+    {
+        printf("Impossible to insert %d at position %d.\n", value, position);
+    }
+
+    return head;
+}
+
 
 int main()
 {
@@ -155,6 +193,14 @@ int main()
     head = InsertAtEnd(head, 100);
 
     printf("\nPrinting nodes:\n");
+    Traverse_a_List(head);
+
+    //Insert at a position
+    int position = 8;
+    int positionValue = 1000;
+    head = InsertAtPosition(head, position, positionValue);
+
+    printf("\nPrinting nodes after insertion :\n");
     Traverse_a_List(head);
 
     printf("\nSearching...\n");
