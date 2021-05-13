@@ -19,6 +19,11 @@ struct Stack
         _top = -1;
     }
 
+    ~Stack()
+    {
+        free(arr);
+    }
+
     void push(int value)
     {
         if((_top+1)<capacity)
