@@ -57,5 +57,8 @@ int main()
     }
     printf("\n");
 
+    //clear the memory from heap
+    delete[] x;
+
     return 0;
 }
